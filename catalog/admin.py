@@ -15,12 +15,14 @@ class Product(admin.ModelAdmin):
     )
     list_filter = ('category',)
     search_fields = ('name', 'description')
+    ordering = ('pk',)
 
 
 @admin.register(Category)
 class Category(admin.ModelAdmin):
     list_display = ('id', 'name', 'description')
     search_fields = ('name',)
+    ordering = ('pk',)
 
 # 'Для моделей категории и продукта настройте отображение в административной панели.' \
 # ' Для категорий выведите id и наименование в список отображения, а для продуктов выведите в список id,' \
