@@ -12,6 +12,5 @@ class Command(BaseCommand):
         self.delete_data()
         Category.objects.bulk_create(lst)
 
-
     def delete_data(self):
         Category.objects.all().delete()
