@@ -1,0 +1,21 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% for object in object_list %}
+<div class="col-6">
+    <div class="card">
+        <div class="card-head text-center">
+            <h1>{{ object.title }}</h1>
+        </div>
+        <div class="card-body">
+            {{ object.content }}
+
+        </div>
+        <div class="card-footer">
+            Views: {{ object.views_count }}
+            <a href="#" type="button" class="btn btn-sm btn-success">edit</a>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

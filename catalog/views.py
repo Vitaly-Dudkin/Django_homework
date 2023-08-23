@@ -1,14 +1,19 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
-from catalog.models import Product, Category
+from catalog.models import Product, Category, BlogPost
 
 
-# Create your views here.
-def home_page(request):
-    context = {
-        'objects_list': Product.objects.all()
-    }
-    return render(request, 'catalog/home_page.html', context)
+class ProductListView(ListView):
+    model = Product
+
+
+# def home_page(request):
+#     context = {
+#         'objects_list': Product.objects.all()
+#     }
+#     return render(request, 'catalog/product_list.html', context)
 
 
 def contact_page(request):
@@ -20,12 +25,41 @@ def contact_page(request):
     return render(request, 'catalog/contact_page.html')
 
 
-# def product_detail(request, id):
-#     product = Product.objects.filter(id=id)
-#     context = {
-#         'name': product.name,
-#         'description': product.description
-#     }
-#
-#     print(context)
-#     return render(request, 'catalog/product_detail.html', context)
+class BlogPostListView(ListView):
+    model = BlogPost
+
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
+
+class BlogPostCreateView(CreateView):
+    model = BlogPost
+    fields = ['title', 'slug', 'content', 'is_published']
+    success_url = reverse_lazy('catalog:blogpost_list')
+
+
+class BlogPostUpdateView(UpdateView):
+    model = BlogPost
+    template_name = 'catalog/blogpost_update_form.html'
+    fields = ['title', 'slug', 'content', 'is_published']
+    success_url = reverse_lazy('catalog:blogpost_list')
+
+
+class BlogPostDeleteView(DeleteView):
+    model = BlogPost
+    template_name = 'catalog/blog_post_confirm_delete.html'
+    success_url = reverse_lazy('catalog:blogpost_list')
+
+
+class BlogPostDetailView(DetailView):
+    model = BlogPost
+    template_name = 'catalog/blog_post_detail.html'
+    success_url = reverse_lazy('catalog:blogpost_list')
+
+    def get_object(self, queryset=None):
+        self.object = super().get_object(queryset)
+        self.object.views_count += 1
+        self.object.save()
+        return self.object

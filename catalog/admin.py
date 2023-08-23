@@ -24,6 +24,9 @@ class Category(admin.ModelAdmin):
     search_fields = ('name',)
     ordering = ('pk',)
 
-# 'Для моделей категории и продукта настройте отображение в административной панели.' \
-# ' Для категорий выведите id и наименование в список отображения, а для продуктов выведите в список id,' \
-# ' название, цену и категорию'
+
+@admin.register(BlogPost)
+class BlogPost(admin.ModelAdmin):
+    list_display = ('id', 'title', 'views_count')
+    search_fields = ('title',)
+    ordering = ('pk',)
