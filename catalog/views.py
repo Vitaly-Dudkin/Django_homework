@@ -80,3 +80,9 @@ class BlogPostDetailView(DetailView):
         self.object.views_count += 1
         self.object.save()
         return self.object
+
+
+class BlogPostRedactorView(DetailView):
+    model = BlogPost
+    template_name = 'catalog/blog_post_edit.html'
+    success_url = reverse_lazy('catalog:blogpost_list')

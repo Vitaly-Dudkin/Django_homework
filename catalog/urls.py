@@ -11,6 +11,7 @@ urlpatterns = [
     path('create/', views.BlogPostCreateView.as_view(), name='blog_create_post'),
     path('update/<int:pk>/', views.BlogPostUpdateView.as_view(), name='blogpost_update_form'),
     path('delete/<int:pk>/', views.BlogPostDeleteView.as_view(), name='blog_post_confirm_delete'),
-    path('detail/<int:pk>/', views.BlogPostDetailView.as_view(), name='blog_post_detail')
+    path('detail/<int:pk>/', views.BlogPostDetailView.as_view(), name='blog_post_detail'),
+    path('redactor/<int:pk>/', views.BlogPostRedactorView.as_view(), name='blog_post_edit')
 
 ]
