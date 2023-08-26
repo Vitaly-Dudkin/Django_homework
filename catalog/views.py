@@ -49,8 +49,9 @@ class BlogPostCreateView(CreateView):
 
 class BlogPostUpdateView(UpdateView):
     model = BlogPost
-    fields = ['title', 'slug', 'content', 'is_published']
-    # success_url = reverse_lazy('catalog:blogpost_list')
+    fields = ['title', 'content', 'is_published']
+    template_name = 'catalog/blogpost_update_form.html'
+    success_url = reverse_lazy('catalog:blogpost_list')
 
     def form_valid(self, form):
         if form.is_valid():
@@ -59,8 +60,8 @@ class BlogPostUpdateView(UpdateView):
             new_mat.save()
         return super().form_valid(form)
 
-    def get_success_url(self):
-        return reverse('catalog:blogpost_list', args=[self.kwargs.get('pk')])
+    # def get_success_url(self):
+    #     return reverse('catalog:blogpost_list', args=[self.kwargs.get('pk')])
 
 
 class BlogPostDeleteView(DeleteView):
