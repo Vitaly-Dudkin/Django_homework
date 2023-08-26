@@ -1,4 +1,11 @@
 {% extends 'catalog/base.html' %}
 {% block content %}
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <p>Do you want to delete the blog </p>
+    <h2>Name blog: {{ object.title }}</h2>
+    <button type="submit" class="btn btn-warning">Delete</button>
+    <a href="{% url 'catalog:blogpost_list' %}" type="submit" class="btn btn-warning">Reject</a>
+</form>
 
 {% endblock %}

@@ -3,7 +3,7 @@
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.as_p }}
-    <button href="{% url 'catalog:blogpost_list' %}" type="submit" class="btn btn-success">Добавить блог</button>
+    <button href="{% url 'catalog:blogpost_list' %}" type="submit" class="btn btn-success">Added blog</button>
 </form>
 
 {% endblock %}
