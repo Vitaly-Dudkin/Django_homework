@@ -1,0 +1,25 @@
+{% extends 'catalog/base.html' %}
+{% block content %}
+{% for object in object_list %}
+<div class="col-4">
+    <div class="card">
+        <div class="card-head text-center">
+            <h1>{{ object.title }}</h1>
+        </div>
+        <div class="card-body">
+            {{ object.content }}
+
+        </div>
+        <div class="card-footer">
+            <a href="{% url 'catalog:blog_post_detail' object.pk %}" type="button"
+               class="btn btn-sm btn-success">Detail</a>
+            <a href="{% url 'catalog:blog_create_post' %}" type="button"
+               class="btn btn-sm btn-success">Create blog</a>
+            <a href="{% url 'catalog:blog_post_confirm_delete' object.pk %}" type="button"
+               class="btn btn-sm btn-success">Delete blog</a>
+
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
