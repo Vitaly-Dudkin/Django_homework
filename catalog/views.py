@@ -2,11 +2,46 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from pytils.translit import slugify
-from catalog.models import Product, Category, BlogPost
+
+from catalog.forms import ProductForm
+from catalog.models import Product, BlogPost
 
 
 class ProductListView(ListView):
     model = Product
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/product_form.html'
+    success_url = reverse_lazy('catalog:home_page')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = 'catalog/product_update.html'
+
+    # success_url = reverse_lazy('catalog:product_detail')
+    def get_success_url(self):
+        return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
+
+    # success_url = reverse_lazy('catalog:home_page')
+
+    def get_success_url(self):
+        return reverse('catalog:home_page', args=[self.kwargs.get('pk')])
+
+
+class ProductDeleteView(DeleteView):
+    model = Product
+    template_name = 'catalog/product_confirm_delete.html'
+    success_url = reverse_lazy('catalog:home_page')
 
 
 # def home_page(request):
@@ -16,13 +51,13 @@ class ProductListView(ListView):
 #     return render(request, 'catalog/product_list.html', context)
 
 
-def contact_page(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        email = request.POST.get('email')
-        message = request.POST.get('message')
-        print(f'{name} ({email}): {message}')
-    return render(request, 'catalog/contact_page.html')
+# def contact_page(request):
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         email = request.POST.get('email')
+#         message = request.POST.get('message')
+#         print(f'{name} ({email}): {message}')
+#     return render(request, 'catalog/contact_page.html')
 
 
 class BlogPostListView(ListView):
