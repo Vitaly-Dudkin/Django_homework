@@ -29,7 +29,7 @@ class ProductCreateView(CreateView):
         context_data['formset'] = formset
         return context_data
 
-    def from_valid(self, form):
+    def form_valid(self, form):
         context_data = self.get_context_data()
         formset = context_data['formset']
         self.object = form.save()
@@ -39,6 +39,7 @@ class ProductCreateView(CreateView):
             formset.save()
 
         return super().form_valid(form)
+
 
 class ProductUpdateView(UpdateView):
     model = Product
@@ -56,7 +57,7 @@ class ProductUpdateView(UpdateView):
         context_data['formset'] = formset
         return context_data
 
-    def from_valid(self, form):
+    def form_valid(self, form):
         context_data = self.get_context_data()
         formset = context_data['formset']
         self.object = form.save()
@@ -68,7 +69,7 @@ class ProductUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse('catalog:update_product', args=[self.kwargs.get('pk')])
+        return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
 
 
 class ProductDetailView(DetailView):

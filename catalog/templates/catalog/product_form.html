@@ -10,7 +10,6 @@
             <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
-
             </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-success">Save</button>
@@ -27,8 +26,6 @@
                 {% for form in formset.forms %}
                 {{ form.as_p }}
                 {% endfor %}
-            </div>
-            <div class="card-footer">
             </div>
         </div>
     </div>
