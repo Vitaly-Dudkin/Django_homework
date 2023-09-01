@@ -1,22 +1,35 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-<div class="col-6">
-    <div class="card">
-        <div class="card-header"><h2 class="card-title">
-            Edit product
-        </h2></div>
-
-        <div class="card-body">
-            <form method="post">
+<form method="post" class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">
+                Edit product
+            </h2></div>
+            <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-success">Save</button>
                 <a href="{% url 'catalog:home_page' %}" type="button" class="btn btn-success">Back</a>
-
-            </form>
+            </div>
+            <div class="card-footer"></div>
         </div>
-        <div class="card-footer"></div>
     </div>
-</div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Version
+            </div>
+            <div class="card-body">
+                {{ formset.management_form }}
+                {% for form in formset.forms %}
+                    {{ form.as_p }}
+                {% endfor %}
+            </div>
+            <div class="card-footer">
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}

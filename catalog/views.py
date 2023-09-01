@@ -1,10 +1,11 @@
+from django.forms import inlineformset_factory
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from pytils.translit import slugify
 
-from catalog.forms import ProductForm
-from catalog.models import Product, BlogPost
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, BlogPost, Version
 
 
 class ProductListView(ListView):
@@ -23,9 +24,31 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
     template_name = 'catalog/product_update.html'
 
-    # success_url = reverse_lazy('catalog:product_detail')
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+        if self.request.method == 'POST':
+            formset = VersionFormset(self.request.POST, instance=self.object)
+        else:
+            formset = VersionFormset(instance=self.object)
+
+        context_data['formset'] = formset
+        return context_data
+
+    def from_valid(self, form):
+        context_data = self.get_context_data()
+        formset = context_data['formset']
+        self.object = form.save()
+
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        return super().form_valid(form)
+
+
     def get_success_url(self):
-        return reverse('catalog:product_detail', args=[self.kwargs.get('pk')])
+        return reverse('catalog:update_product', args=[self.kwargs.get('pk')])
 
 
 class ProductDetailView(DetailView):

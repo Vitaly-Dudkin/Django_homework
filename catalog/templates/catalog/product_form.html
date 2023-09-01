@@ -6,14 +6,12 @@
         <div class="card-header"><h2 class="card-title">
             Adding product
         </h2></div>
-
         <div class="card-body">
             <form method="post">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-success">Save</button>
                 <a href="{% url 'catalog:home_page' %}" type="button" class="btn btn-success">Back</a>
-
             </form>
         </div>
         <div class="card-footer"></div>
