@@ -15,6 +15,7 @@
             <h1 class="card-title pricing-card-title">$ {{ object.purchase_price }}</h1>
             <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                 <li>Description: {{ object.description|slice:":100" }}</li>
+                <li> Version:{% if product.active_version %} {{ product.active_version.name }} {% else %} Не задана {% endif %} </li>
 
             </ul>
             <a href="{% url 'catalog:product_confirm_delete' object.pk %}" class="btn btn-lg btn-block btn-danger">Delete</a>
