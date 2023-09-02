@@ -8,13 +8,15 @@
         </h2></div>
 
         <div class="card-body">
-          Description:  {{ object.description }}
-            <form method="post">
-                {% csrf_token %}
-                {{ form.as_p }}
-
-
-            </form>
+<!--          Description:  {{ object.description }}-->
+            <ul class="list-unstyled mt-3 mb-4 text-start m-3">
+                <li>Description: {{ object.description|slice:":100" }}</li>
+                {% for version_item in object.version_set.all %}
+                {% if version_item.is_current %}
+                <li> Version:  {{ version_item.version_name }}</li>
+                {% endif %}
+                {% endfor %}
+            </ul>
         </div>
         <div class="card-footer">
             <a href="{% url 'catalog:update_product' object.pk %}" type="button"
