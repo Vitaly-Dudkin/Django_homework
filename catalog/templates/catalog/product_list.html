@@ -1,6 +1,9 @@
 {% extends 'catalog/base.html' %}
 {% load my_tags %}
 {% block content %}
+<div class="col-12 mb-5">
+    <a class="btn btn-outline-primary" href="{% url 'catalog:create_product' %}"> Add product </a>
+</div>
 {% for object in object_list %}
 <div class="col-3">
     <div class="card mb-4 box-shadow">
@@ -12,10 +15,17 @@
             <h1 class="card-title pricing-card-title">$ {{ object.purchase_price }}</h1>
             <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                 <li>Description: {{ object.description|slice:":100" }}</li>
-
+                {% for version in object.version_set.all %}
+                <li> Version: {% if version.is_current %} {{ version.version_name }} {% else %} Не
+                    задана {% endif %}
+                </li>
+                {% endfor %}
             </ul>
-            <button type="button" class="btn btn-lg btn-block btn-outline-primary">Buy</button>
-            <a href="{% url 'catalog:contact_page' %}" class="btn btn-lg btn-block btn-outline-primary">Contacts us</a>
+            <a href="{% url 'catalog:product_confirm_delete' object.pk %}" class="btn btn-lg btn-block btn-danger">Delete</a>
+            <a class="btn btn-lg btn-block btn-outline-primary" href="{% url 'catalog:update_product' object.pk %}">Edit
+                product</a>
+            <a href="{% url 'catalog:product_detail' object.pk %}" class="btn btn-lg btn-block btn-outline-primary">View
+                product</a>
         </div>
     </div>
 </div>

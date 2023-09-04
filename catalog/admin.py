@@ -30,3 +30,10 @@ class BlogPost(admin.ModelAdmin):
     list_display = ('id', 'title', 'views_count')
     search_fields = ('title',)
     ordering = ('pk',)
+
+
+@admin.register(Version)
+class VersionAdmin(admin.ModelAdmin):
+    list_display = ('id', 'product', 'version_number', 'version_name', 'is_current')
+    search_fields = ('product',)
+    list_filter = ('is_current', 'product',)
