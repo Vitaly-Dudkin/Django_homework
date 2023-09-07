@@ -11,6 +11,14 @@ class User(AbstractUser):
     phone = models.CharField(max_length=35, verbose_name='phone_number', null=True, blank=True)
     avatar = models.ImageField(upload_to='users/', verbose_name='image', null=True, blank=True)
     country = models.CharField(max_length=50, verbose_name='Country', null=True, blank=True)
+    code = models.CharField(unique=True, null=True, blank=True, verbose_name='secret_key')
+    is_active = models.BooleanField("active",
+                                    default=False,
+                                    help_text=(
+                                        "Designates whether this user should be treated as active. "
+                                        "Unselect this instead of deleting accounts."
+                                    ),
+                                    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
