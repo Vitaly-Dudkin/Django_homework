@@ -134,12 +134,6 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
 
-# EMAIL_HOST = 'smtp.mail.ru'
-# EMAIL_PORT = 465
-# EMAIL_HOST_USER = 'django_sky@mail.ru'
-# EMAIL_HOST_PASSWORD = 'wJfm3V9QuHgg4D4'
-# EMAIL_USE_SSL = True
-
 
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
